@@ -1,0 +1,2 @@
+product 1 : sweater 50 euro
+product 2 : jacket 50 euro

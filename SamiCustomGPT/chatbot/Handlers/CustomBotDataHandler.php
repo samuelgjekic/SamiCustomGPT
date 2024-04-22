@@ -6,7 +6,6 @@ use ReflectionClass;
 use ReflectionProperty;
 use SamiCustomGPT\Interfaces\ICustomBotDataModel;
 use SamiCustomGPT\Models\CustomBotDataModel;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/config.php';
 
 class CustomBotDataHandler {
 
@@ -113,7 +112,7 @@ class CustomBotDataHandler {
     $bot_data_object->setInstructions($bot_data['instructions']) ?? 'You are a helpful assistant';
     $bot_data_object->setFiles($bot_data['files']);
     if($insert_to_db == TRUE) {
-       CustomBotDataHandler::insertBotToDb($bot_data_object);
+       self::insertBotToDb($bot_data_object);
     }
     return $bot_data_object;
     }

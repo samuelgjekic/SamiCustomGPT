@@ -10,9 +10,9 @@ interface ICustomBotDataModel {
 /  to work without modification, it also needs a method for getting instructions
 /  as the custom bot cant be started without the instructions.  */
 
-    public function getInstructions() : string;
+    public function getInstructions();
 
-    public function getFiles() : array;
+    public function getFiles();
 
     public function getId(); // Unique Id of the bot
 

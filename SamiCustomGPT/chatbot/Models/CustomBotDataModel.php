@@ -8,7 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/ICus
 class CustomBotDataModel implements ICustomBotDataModel {
 
     private ?string $id;
-    private?string $title;
+    private ?string $title;
     private ?string $description;
     private ?string $instructions;
     private ?array $files;
@@ -36,7 +36,7 @@ class CustomBotDataModel implements ICustomBotDataModel {
     
     function jsonDecode($bot_json_data){
         $decoded_data = json_decode($bot_json_data);
-        $this->id = $decoded_data->id ?? $this->generateId();
+        $this->id = $decoded_data->id ?? null;
         $this->title = $decoded_data->title ?? null;
         $this->description = $decoded_data->description ?? null;
         $this->instructions = $decoded_data->instructions ?? null;

@@ -12,8 +12,8 @@ use LLPhant\OpenAIConfig;
 use SamiCustomGPT\Interfaces\IFileHandler;
 class FileHandler implements IFileHandler {
 
-    public $vectorStorage;
-    public $generator;
+    private $vectorStorage;
+    private $generator;
     
     private OpenAIConfig $config;
 
@@ -38,10 +38,19 @@ class FileHandler implements IFileHandler {
         
         $this->vectorStorage->addDocuments($embeddedDocuments);
     }
-    public function AttachAllFilesToBot(array $files = []){
+    public function AttachAllFilesToBot($files = []){
         // Attaches multiple files to the custom chatbot, the filepaths has to be in array format
         foreach($files as $filePath) {
             // For each filepath in the array we run the AttachFileToBot function
             $this->AttachFileToBot($filePath); }
     }
+
+    public function getVectorStore(){
+        return $this->vectorStorage;
+    }
+
+    public function getGenerator(){
+        return $this->generator;
+    }
+
 }
