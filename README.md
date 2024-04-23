@@ -7,8 +7,11 @@ and/or whoever published it. This enables anyone to create no code ai chatbots b
 
 As an example this could be used to create a personal shopping assistant to existing ecommerce website, but with no code.
 
+Clone repo to empty folder(such as www):
+`git clone https://github.com/samuelgjekic/SamiCustomGPT.git .`
+_If folder is not empty remove the dot in the end._
 
- **### LLphant and OpenAI/PHP-Client**
+ ### **LLphant and OpenAI/PHP-Client**
  SamiCustomGPT uses the[ LLPhant](https://github.com/theodo-group/LLPhant) framework thats built on the OpenAi PHP Client library.
  
-
+ 
