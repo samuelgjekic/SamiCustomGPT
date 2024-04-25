@@ -2,6 +2,8 @@
 /* The main Chatbot Data Object */
 
 namespace SamiCustomGPT;
+use SamiCustomGPT\Testing\TestFunction;
+use LLPhant\Chat\FunctionInfo\FunctionBuilder;
 use LLPhant\OpenAIConfig;
 use LLPhant\Query\SemanticSearch\QuestionAnswering;
 use LLPhant\Chat\OpenAIChat;
@@ -9,12 +11,13 @@ use SamiCustomGPT\Interfaces\ICustomBotClient;
 use SamiCustomGPT\Interfaces\ICustomBotDataModel;
 use SamiCustomGPT\Interfaces\IFileHandler;
 use SamiCustomGPT\Handlers\FileHandler;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Testing/TestFunction.php';
+
 
 
 class CustomBotClient implements ICustomBotClient{
     private OpenAIConfig $config;
     public ICustomBotDataModel $data;
-
     private ?IFileHandler $filehandler;
     public $client;
 function __construct(ICustomBotDataModel $bot_data_object,OpenAIConfig $config,?IFileHandler $filehandler = null){
@@ -25,10 +28,11 @@ $this->data = $bot_data_object;
 }
 $this->filehandler = $filehandler ?? new FileHandler($this->config,'small');
 $this->initializeCustomBotClient();
+$this->AddFunctionsToBot();
 }
 
 public function SendMessageToBot($content) : string {
-    $response = $this->client->answerQuestion($content);
+    $response = $this->client->answerQuestionOrReturnFunctionReply($content);
   return $response;
 }
 
@@ -44,6 +48,11 @@ private function initializeCustomBotClient(){
     );
     $this->client->systemMessageTemplate = $this->data->getInstructions() . '\\n\\n{context}.';
     
+}
+
+private function AddFunctionsToBot(){
+$tools = FunctionBuilder::buildFunctionInfo(new TestFunction(), 'getSpecialString');
+$this->client->chat->addTool($tools);
 }
 
 }
