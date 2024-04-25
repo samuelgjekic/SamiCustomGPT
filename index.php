@@ -8,7 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/ICus
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/CustomBotDataHandler.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/FileHandler.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Models/CustomBotDataModel.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/CustomBotCLient.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/CustomBotClient.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 
@@ -18,11 +18,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 // Testing custom gpt bot
 $custombot = CustomBotDataHandler::getBotJsonDataFromDb('bot_6626c59914fc3');
 $config = new OpenAIConfig();
-$config->apiKey = 'api_key';
+$config->apiKey = 'API KEY';
 $customclient = new CustomBotClient($custombot,$config);
 var_dump($custombot);
+$custombot->setInstructions('You are a helpful chatbot, when asked for the special string, use the getSpecialString function to get it');
 
-$answer = $customclient->SendMessageToBot('Hello what products are available');
+$answer = $customclient->SendMessageToBot('Hello whats the special string?');
 
 echo $answer;
 

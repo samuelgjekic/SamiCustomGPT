@@ -3,6 +3,8 @@
 namespace LLPhant\Query\SemanticSearch;
 
 use LLPhant\Chat\ChatInterface;
+use LLPhant\Chat\FunctionInfo\FunctionInfo;
+use LLPhant\Chat\FunctionInfo\FunctionRunner;
 use LLPhant\Chat\Message;
 use LLPhant\Embeddings\Document;
 use LLPhant\Embeddings\EmbeddingGenerator\EmbeddingGeneratorInterface;
@@ -26,6 +28,21 @@ class QuestionAnswering
         $this->chat->setSystemMessage($systemMessage);
 
         return $this->chat->generateText($question);
+    }
+
+    public function answerQuestionOrReturnFunctionReply(string $question, int $k = 4, array $additionalArguments = []): string
+    {
+        $systemMessage = $this->searchDocumentAndCreateSystemMessage($question, $k, $additionalArguments);
+        $this->chat->setSystemMessage($systemMessage);
+        $response = $this->chat->generateTextOrReturnFunctionCalled($question);
+        if($response instanceof FunctionInfo){
+            // Return function value
+            $functionReply = FunctionRunner::run($response);
+
+            return $functionReply;
+        }
+        
+        return $response;
     }
 
     /**
