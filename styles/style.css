@@ -1,0 +1,22 @@
+.form-group label {
+    font-weight: bold;
+}
+
+.form-check-label {
+    font-weight: normal;
+}
+
+.box-style {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid #dee2e6;
+}
+
+.box-style.selected {
+    border-color: #007bff;
+    box-shadow: 0 0 10px 2px rgba(0, 123, 255, 0.5);
+}
+
+.text-center {
+    text-align:center;
+}
