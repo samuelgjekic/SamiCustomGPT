@@ -22,7 +22,7 @@ The primary motivation behind this project is to empower users to create AI chat
 
 To get started with SamiCustomGPT, clone the repository to an empty folder using the following command:
 
-```bash
+
 git clone https://github.com/samuelgjekic/SamiCustomGPT.git .
 
 ## Quick Examples
@@ -39,18 +39,15 @@ $bot_object->setInstructions('You are a shop assistant, use the product list to 
 
 // You can use the ID to access the bot from file
 $bot_id = CustomBotDataHandler::createBotFile($bot_object);
-
 ```
+
 
 Example of retrieving a bot:
 ```
 // You can retrieve bot data using the ID
 $bot_object = CustomBotDataHandler::getBotFromFile('bot_6626c59914fc3'); // Replace ID with the ID of the bot you want to retrieve
-
 ```
 
-You can initiate the client using the bot_object:
-```
 
 Example of retrieving a bot:
 ```
@@ -61,8 +58,8 @@ $config->apiKey = 'API KEY';
 $client = new CustomBotClient($bot_object,$config);
 
 // Extra note: You can create your own filehandler and send it as parameter when creating a new client
-
 ```
+
 Send a message and get a response:
 ```
 $response = $client->SendMessageToBot($prompt);
