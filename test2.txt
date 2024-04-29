@@ -1,0 +1,2 @@
+product 5 : sweater 503 euro
+product 6 : jacket 502 euro

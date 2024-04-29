@@ -15,20 +15,21 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/CustomBotClient
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 // Testing custom gpt bot
-$custombot = CustomBotDataHandler::getBotJsonDataFromDb('bot_6626c59914fc3');
 $config = new OpenAIConfig();
 $config->apiKey = 'API KEY';
-$custombot->setInstructions(
-    'You are a helpful assistant that will talk about SamiCustomGPT - A Custom AI Chatbot built in PHP using LLphants Ai framework. 
-     You will explain all the positive things about using a AI Powered chatbot on websites');
-$customclient = new CustomBotClient($custombot,$config);
+
+$bot_model = CustomBotDataHandler::getBotFromFile('bot_6626c59914fc3');
+
+$customgpt = new CustomBotClient($bot_model,$config);
+
+
 
 
 // Check if the message parameter is set
 if (isset($_POST['message'])) {
     $message = $_POST['message'];
     // Send the message and return the response
-    $response = $customclient->SendMessageToBot($message);
+    $response = $customgpt->SendMessageToBot($message);
     echo $response;
     exit; // End script execution after sending the response
 }

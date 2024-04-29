@@ -1,2 +1,4 @@
 product 1 : sweater 50 euro
 product 2 : jacket 50 euro
+product 3 : jeans 30 euro
+product 4 : watch 540 euro

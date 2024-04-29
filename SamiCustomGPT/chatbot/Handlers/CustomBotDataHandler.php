@@ -123,4 +123,34 @@ class CustomBotDataHandler {
     $bot_data_object->jsonDecode($encoded_json_data);
     return $bot_data_object;
     }
+
+    public static function createBotFile(ICustomBotDataModel $bot) : void 
+    {
+     // Access private properties using reflection
+     $reflection = new ReflectionClass($bot);
+     $properties = $reflection->getProperties(ReflectionProperty::IS_PRIVATE);
+     $serialized_data = [];
+ 
+     // Serialize each property
+     foreach ($properties as $property) {
+         $property->setAccessible(true); // Allow access to private property
+         $property_name = $property->getName();
+         $property_value = $property->getValue($bot);
+         $serialized_data[$property_name] = $property_value;
+     }
+ 
+     // Serialize the serialized data array
+     $bot_data_serialized = json_encode($serialized_data);
+      // Save JSON data to file
+      file_put_contents($bot->getId() . '.json', $bot_data_serialized);
+    }
+
+    public static function getBotFromFile($filename) : ICustomBotDataModel
+    {
+    $jsonData = file_get_contents($filename . '.json');
+    $bot = new CustomBotDataModel();
+    $bot->jsonDecode($jsonData);
+    return $bot;
+    }
+
 }
