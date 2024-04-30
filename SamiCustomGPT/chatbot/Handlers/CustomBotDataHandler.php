@@ -124,7 +124,7 @@ class CustomBotDataHandler {
     return $bot_data_object;
     }
 
-    public static function createBotFile(ICustomBotDataModel $bot) : void 
+    public static function createBotFile(ICustomBotDataModel $bot) : string
     {
      // Access private properties using reflection
      $reflection = new ReflectionClass($bot);
@@ -142,12 +142,13 @@ class CustomBotDataHandler {
      // Serialize the serialized data array
      $bot_data_serialized = json_encode($serialized_data);
       // Save JSON data to file
-      file_put_contents($bot->getId() . '.json', $bot_data_serialized);
+      file_put_contents('userfiles/'.$bot->getId() . '.json', $bot_data_serialized);
+      return $bot->getId();
     }
 
-    public static function getBotFromFile($filename) : ICustomBotDataModel
+    public static function getBotFromFile($filename)
     {
-    $jsonData = file_get_contents($filename . '.json');
+    $jsonData = file_get_contents('userfiles/'. $filename . '.json');
     $bot = new CustomBotDataModel();
     $bot->jsonDecode($jsonData);
     return $bot;

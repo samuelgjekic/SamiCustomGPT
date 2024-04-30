@@ -1,7 +1,8 @@
 
 <?php
+use SamiCustomGPT\Models\CustomBotDataModel;
+session_start();
 // Embed SamiCustomGPT
-// TODO Implement Sessions
 use LLPhant\OpenAIConfig;
 use SamiCustomGPT\CustomBotClient;
 use SamiCustomGPT\Handlers\CustomBotDataHandler;
@@ -16,21 +17,31 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 // Testing custom gpt bot
 $config = new OpenAIConfig();
-$config->apiKey = 'API KEY';
+$config->apiKey = '';
 
-$bot_model = CustomBotDataHandler::getBotFromFile('bot_6626c59914fc3');
+$bot_model = new CustomBotDataModel();
+$customgpt;
 
+if(!isset($_SESSION['botid'])) {
+    if(isset($_GET['botid'])) {
+        $bot_model = CustomBotDataHandler::getBotFromFile($_GET['botid']);
+        $_SESSION['botid'] = $_GET['botid'];
+    } else {
+        exit('No bot id was set');
+    }
+} else {
+    if(isset($_GET['botid']) && $_GET['botid'] !== $_SESSION['botid']) {
+        $_SESSION['botid'] = $_GET['botid']; 
+    }
+    $bot_model = CustomBotDataHandler::getBotFromFile($_SESSION['botid']);
+}
 $customgpt = new CustomBotClient($bot_model,$config);
-
-
-
-
 // Check if the message parameter is set
 if (isset($_POST['message'])) {
     $message = $_POST['message'];
     // Send the message and return the response
     $response = $customgpt->SendMessageToBot($message);
-    echo $response;
+    echo json_encode(array("response" => $response, "assistantName" => $bot_model->getTitle()));
     exit; // End script execution after sending the response
 }
 ?>
@@ -53,13 +64,7 @@ if (isset($_POST['message'])) {
                     <div class="message-text">Hello! How can I assist you today?</div>
                 </div>
             </div>
-            <div class="message user-message">
-                <div class="avatar">U</div>
-                <div class="message-content">
-                    <div class="message-title">You:</div>
-                    <div class="message-text">I need help with my project.</div>
-                </div>
-            </div>
+            
         </div>
         <div class="powered-by-text">Created by Samuel Gjekic</div>
         <div class="input-container">

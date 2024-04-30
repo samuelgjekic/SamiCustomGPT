@@ -30,7 +30,7 @@ class CustomBotDataModel implements ICustomBotDataModel {
         return $this->instructions;
     }
 
-    function setInstructions(string $instructions) {
+    public function setInstructions(string $instructions) {
         $this->instructions = $instructions ?? 'You are a helpful assistant.';
     }
     

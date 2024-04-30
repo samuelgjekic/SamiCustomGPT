@@ -29,6 +29,7 @@ $this->data = $bot_data_object;
 $this->filehandler = $filehandler ?? new FileHandler($this->config,'small');
 $this->initializeCustomBotClient();
 $this->AddFunctionsToBot();
+$this->client->chat->setModelOption('max_tokens', 150);
 }
 
 public function SendMessageToBot($content) : string {
