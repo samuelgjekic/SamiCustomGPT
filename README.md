@@ -8,10 +8,13 @@
 
 ## Changelog
 ```
-2024-05-11: Added support for session based conversation memory. Which means
+1.0.4: Enhanced the Chatbox design, now animated avatar, needs to be clicked to
+show the chat.
+
+1.0.3: Added support for session based conversation memory. Which means
 the ai will now remember the conversation untill session is closed. 
 
-2024-05-05: Added support for storing the chatbot as json
+1.0.2: Added support for storing the chatbot as json
 ```
 
 
