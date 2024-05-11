@@ -5,6 +5,15 @@
 **SamiCustomGPT** is a project aimed at creating a customizable GPT chatbot with vector stored knowledge base indexing. Built using PHP, this project is a work in progress with the goal of enabling users to easily customize chatbots for various purposes, tailored to individual or organizational needs.
 ![samigpt](https://github.com/samuelgjekic/SamiCustomGPT/assets/41647182/a8fe0b1a-60d3-4973-b08a-8f517f607f54)
 
+## Changelog
+```
+2024-05-11: Added support for session based conversation memory. Which means
+the ai will now remember the conversation untill session is closed. 
+
+2024-05-05: Added support for storing the chatbot as json
+```
+
+
 
 ## Motivation
 
