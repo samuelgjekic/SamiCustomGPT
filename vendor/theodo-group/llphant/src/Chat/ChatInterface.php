@@ -16,6 +16,8 @@ interface ChatInterface
     /** @param  Message[]  $messages */
     public function generateChat(array $messages): string;
 
+    public function generateChatOrReturnFunctionCalled(array $messages): string|FunctionInfo;
+
     /** @param  Message[]  $messages */
     public function generateChatStream(array $messages): StreamInterface;
 

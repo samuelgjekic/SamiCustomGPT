@@ -71,6 +71,24 @@ class QuestionAnswering
         return $this->chat->generateChatStream($messages);
     }
 
+    public function answerQuestionFromChatOrReturnFunctionCalled(array $messages, int $k = 4, array $additionalArguments = []): string
+    {
+        // First we need to give the context to openAI with the good instructions
+        $userQuestion = $messages[count($messages) - 1]->content;
+        $systemMessage = $this->searchDocumentAndCreateSystemMessage($userQuestion, $k, $additionalArguments);
+        $this->chat->setSystemMessage($systemMessage);
+
+        $response = $this->chat->generateChatOrReturnFunctionCalled($messages);
+        if($response instanceof FunctionInfo){
+            // Return function value
+            $functionReply = FunctionRunner::run($response);
+
+            return $functionReply;
+        }
+
+        return $response;
+    }
+
     /**
      * @param  array<string, string|int>|array<mixed[]>  $additionalArguments
      */

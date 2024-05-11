@@ -17,7 +17,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 // Testing custom gpt bot
 $config = new OpenAIConfig();
-$config->apiKey = '';
+$config->apiKey = 'FAKE API KEY';
 
 $bot_model = new CustomBotDataModel();
 $customgpt;
@@ -40,7 +40,7 @@ $customgpt = new CustomBotClient($bot_model,$config);
 if (isset($_POST['message'])) {
     $message = $_POST['message'];
     // Send the message and return the response
-    $response = $customgpt->SendMessageToBot($message);
+    $response = $customgpt->SendConversationToBot($message);
     echo json_encode(array("response" => $response, "assistantName" => $bot_model->getTitle()));
     exit; // End script execution after sending the response
 }
