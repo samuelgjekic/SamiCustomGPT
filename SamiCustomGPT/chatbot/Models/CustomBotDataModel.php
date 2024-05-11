@@ -12,6 +12,8 @@ class CustomBotDataModel implements ICustomBotDataModel {
     private ?string $description;
     private ?string $instructions;
     private ?array $files;
+
+    private ?string $poweredBy = 'SamiCustomGPT';
     
 
     function __construct() {
@@ -24,6 +26,11 @@ class CustomBotDataModel implements ICustomBotDataModel {
 
     function setFiles(array $files){
         $this->files = $files ?? [];
+    }
+
+    function getPoweredBy(): string
+    {
+        return $this->poweredBy;
     }
 
     function getInstructions() : string{

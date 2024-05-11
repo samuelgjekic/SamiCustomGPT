@@ -17,7 +17,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 // Testing custom gpt bot
 $config = new OpenAIConfig();
-$config->apiKey = 'FAKE API KEY';
+$config->apiKey = 'API KEY HERE';
 
 $bot_model = new CustomBotDataModel();
 $customgpt;
@@ -50,33 +50,36 @@ if (isset($_POST['message'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
+    <title>SamICustomGPT</title>
     <link rel="stylesheet" href="/styles/chatbot.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-wH9k7nsVUoZqzYYJf8e2J/UVWl8z9+3K8Ra5R11k+vsHVDc14nYDbZMq0tLn1U6/4drK2+fbSKVnurUrfzlVPA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
-<div class="chat-container">
-        <div class="chat-title">Chat with SamiCustomGPT</div>
+<div class="chat-avatar" id="chatAvatar">
+<i class="fas fa-user">Chat now</i> 
+</div>
+
+<div class="chat-container" id="chatCont">
+        <div class="chat-title">DinAI Chattbot</div>
         <div class="chat-box" id="chatBox">
             <div class="message assistant-message">
-                <div class="avatar">A</div>
+                <div class="avatar">DinAI</div>
                 <div class="message-content">
-                    <div class="message-title">SamiCustomGPT:</div>
-                    <div class="message-text">Hello! How can I assist you today?</div>
+                    <div class="message-title">DinAI:</div>
+                    <div class="message-text">Hej där! Kan jag hjälpa dig?</div>
                 </div>
             </div>
             
+            
         </div>
-        <div class="powered-by-text">Created by Samuel Gjekic</div>
+        <div class="powered-by-text"><?= 'Powered by ' . $bot_model->getPoweredBy() // Powered by section ?></div>
         <div class="input-container">
-            <input type="text" id="messageInput" placeholder="Type your message...">
-            <button id="sendButton">Send</button>
+            <input type="text" id="messageInput" placeholder="Skriv ditt meddelande...">
+            <button id="sendButton">Skicka</button>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/chat.js"></script> <!-- Update JavaScript path to absolute -->
 </body>
 </html>
-
-
-
-

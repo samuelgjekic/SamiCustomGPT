@@ -4,6 +4,15 @@ $(document).ready(function() {
     const chatBox = $("#chatBox");
     const messageInput = $("#messageInput");
     const sendButton = $("#sendButton");
+    const chatAvatar = $("#chatAvatar"); // New chat avatar element
+    const chatContainer = $("#chatCont");
+
+chatAvatar.on("click", function() {
+    console.log("Avatar clicked"); // Add this line
+    chatContainer.toggleClass("chat-visible");
+    chatAvatar.hide();
+});
+
 
 // Function to append a message to the chat box
 function appendMessage(message, isUser, assistantName) {
