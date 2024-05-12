@@ -6,6 +6,8 @@
 
 ![samicustomgpt](https://github.com/samuelgjekic/SamiCustomGPT/assets/41647182/ce54ffcb-c5c1-40a8-8634-3d8763f915b1)
 
+## Demo
+You can check out the chatbot in action [ Here](https://samicustomgpt.bredfy.com)
 
 ## Changelog
 ```
