@@ -9,6 +9,10 @@
 
 ## Changelog
 ```
+1.0.5: 
+*Animated the chatbot and added appearance upgrades.
+*Added support for fetching data from URLs.
+
 1.0.4: Enhanced the Chatbox design, now animated avatar, needs to be clicked to
 show the chat.
 
