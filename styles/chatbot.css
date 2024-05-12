@@ -2,9 +2,9 @@
 
 .chat-container {
     position: fixed;
-    bottom: 0;
+    bottom: 10px;
     right: 0;
-    width: 300px;
+    width: 350px;
     margin-bottom: 20px;
     margin-right: 20px;
     border: 1px solid #ccc;
@@ -13,27 +13,40 @@
     box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.1);
     z-index: 9999; /* Ensure the chatbox appears on top of other content */
     display: none; /* Hide chatbot container by default */
-
 }
 
 .chat-title {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #8a2be2; /* Purple color */
+    color: #fff; /* White text color */
     padding: 10px;
     text-align: center;
+    font-size: 18px; /* Adjust font size as needed */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
 }
 
+
+
 .chat-box {
-    height: 200px;
+    height: 300px;
     padding: 10px;
     overflow-y: auto;
+    background-color: whitesmoke; /* Set background color of chatbox */
 }
 
 .message {
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+    background-color: white;
+    border-radius: 4px; /* Add border-radius for rounded corners */
+    padding: 10px; /* Add padding to increase space inside the message container */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add box shadow for a modern border effect */
 }
+
+
 
 .avatar {
     background-color: #ccc;
@@ -44,16 +57,22 @@
     text-align: center;
     line-height: 40px;
     margin-right: 10px;
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+
 }
 
 
 
 .assistant-message .avatar {
-    background-color: #007bff;
+    background-color: #8a2be2;
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+
 }
 
 .user-message .avatar {
     background-color: #999;
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+
 }
 
 .message-content {
@@ -79,20 +98,29 @@
 .input-container {
     display: flex;
     padding: 10px;
-    background-color: #f9f9f9;
+    background-color: whitesmoke;
 }
 
 #messageInput {
     flex: 1;
     margin-right: 10px;
+    display: flex;
+    padding: 15px; /* Increase padding for a bigger input container */
+    background-color: white; /* Light gray background color for a modern look */
+    border-radius: 20px; /* Add rounded corners */
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+
 }
 
 #sendButton {
-    background-color: #007bff;
+    background-color: #8a2be2;
     color: #fff;
     border: none;
     padding: 8px 15px;
     cursor: pointer;
+    border-radius: 20px; /* Adjust the border radius to make the button more rounded */
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+
 }
 .user-message .avatar,
 .assistant-message .avatar {
@@ -102,18 +130,21 @@
 
    /* Custom styles for the powered by text */
    .powered-by-text {
-    font-size: 12px;
+    font-size: 15px;
+    background-color: whitesmoke;
     color: #888;
     text-align: center;
+    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+
 }
 
-.chat-avatar {
+.chat-icon {
     position: fixed;
     bottom: 20px;
     right: 20px;
     width: 60px;
     height: 60px;
-    background-color: #007bff;
+    background-color: #8a2be2;
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -121,7 +152,17 @@
     align-items: center;
     cursor: pointer;
     text-align: center;
-    animation: pulse 2s infinite; /* Example CSS animation */
+    animation: fadeIn 1s forwards, pulse 2s infinite 1s; /* Chain fade-in and pulse animations */
+    font-size: 24px;
+    font-family: 'Open Sans', sans-serif;
+    align-content:center;
+    
+}
+
+.chat-icon i {
+    position: relative;
+    top: 1px; /* Adjust vertically */
+    left: 1px; /* Adjust horizontally */
 }
 
 @keyframes pulse {
@@ -130,6 +171,70 @@
     100% { transform: scale(1); }
 }
 
+
+
 .chat-visible {
     display: block !important;
+}
+
+.close-button {
+    position: absolute;
+    top: -7px;
+    right: 10px;
+    cursor: pointer;
+    color: #fff; /* White color for the X */
+    font-size: 44px;
+    padding: 5px;
+    z-index: 999; /* Ensure the close button is on top of other content */
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-out {
+    opacity: 1;
+    animation: fadeOut 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes typingDots {
+    0% {
+        content: "";
+    }
+    25% {
+        content: ".";
+    }
+    50% {
+        content: "..";
+    }
+    75% {
+        content: "...";
+    }
+}
+
+/* Apply the typingDots animation to the loading message container */
+.loading-message:after {
+    content: "";
+    animation: typingDots 1s infinite; /* Apply the typingDots animation */
+    display: inline-block;
+    vertical-align: middle;
 }
