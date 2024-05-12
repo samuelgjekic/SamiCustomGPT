@@ -1,10 +1,10 @@
 <?php
 if(!isset($_GET['botid'])) {
 echo '<!-- Embed the chatbox using an iframe -->
-<iframe src="/chat.php?botid=bot_66310ff24fa03" style="position: fixed; bottom: 20px; right: 20px; width: 330px; height: 400px; border: none;"></iframe>';
+<iframe src="/chat.php?botid=bot_66310ff24fa03" style="z-index: 9999; position: fixed; bottom: 20px; right: 20px; width: 330px; height: 400px; border: none;"></iframe>';
 } else {
   echo '<!-- Embed the chatbox using an iframe -->
-  <iframe src="/chat.php?botid=' . $_GET['botid'] . '" style="position: fixed; bottom: 20px; right: 20px; width: 330px; height: 400px; border: none;"></iframe>';
+  <iframe src="/chat.php?botid=' . $_GET['botid'] . '" style="z-index: 9999; position: fixed; bottom: 20px; right: 20px; width: 330px; height: 400px; border: none;"></iframe>';
 }
 ?>
 <!DOCTYPE html>

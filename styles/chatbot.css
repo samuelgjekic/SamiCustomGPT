@@ -14,6 +14,16 @@
     z-index: 9999; /* Ensure the chatbox appears on top of other content */
     display: none; /* Hide chatbot container by default */
 }
+/* Media query for mobile devices */
+@media (max-width: 767px) {
+    .chat-container {
+        width: calc(100% - 40px); /* Adjust width to fit the screen width */
+        margin-left: 20px; /* Add margin to maintain space from left edge */
+        margin-right: 20px; /* Add margin to maintain space from right edge */
+        left: 0; /* Reset left positioning */
+        transform: none; /* Remove any previous transform */
+    }
+}
 
 .chat-title {
     background-color: #8a2be2; /* Purple color */
