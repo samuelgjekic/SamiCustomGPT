@@ -13,7 +13,7 @@ use SamiCustomGPT\Interfaces\ICustomBotClient;
 use SamiCustomGPT\Interfaces\ICustomBotDataModel;
 use SamiCustomGPT\Interfaces\IFileHandler;
 use SamiCustomGPT\Handlers\FileHandler;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Testing/TestFunction.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Testing/TestFunction.php';
 
 
 

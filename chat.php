@@ -7,13 +7,13 @@ use LLPhant\OpenAIConfig;
 use SamiCustomGPT\CustomBotClient;
 use SamiCustomGPT\Handlers\CustomBotDataHandler;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/IFileHandler.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/ICustomBotClient.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/CustomBotDataHandler.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/FileHandler.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Models/CustomBotDataModel.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/CustomBotClient.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Interfaces/IFileHandler.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Interfaces/ICustomBotClient.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Handlers/CustomBotDataHandler.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Handlers/FileHandler.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Models/CustomBotDataModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/CustomBotClient.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/vendor/autoload.php';
 
 
 // Testing custom gpt bot
@@ -53,7 +53,7 @@ if (isset($_POST['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SamiCustomGPT></title>
-    <link rel="stylesheet" href="/styles/chatbot.css"> 
+    <link rel="stylesheet" href="/wp-content/plugins/SamiCustomGPT/styles/chatbot.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -85,6 +85,6 @@ if (isset($_POST['message'])) {
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/chat.js"></script> <!-- Update JavaScript path to absolute -->
+    <script src="/wp-content/plugins/SamiCustomGPT/chat.js"></script> <!-- Update JavaScript path to absolute -->
 </body>
 </html>

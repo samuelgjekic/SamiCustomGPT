@@ -3,7 +3,7 @@
 
 namespace SamiCustomGPT\Models;
 use SamiCustomGPT\Interfaces\ICustomBotDataModel;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/ICustomBotDataModel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/SamiCustomGPT/chatbot/Interfaces/ICustomBotDataModel.php';
 
 class CustomBotDataModel implements ICustomBotDataModel {
 
