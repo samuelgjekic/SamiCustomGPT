@@ -11,6 +11,8 @@ You can check out the chatbot in action [ Here](https://samicustomgpt.bredfy.com
 
 ## Changelog
 ```
+1.0.6: Can now fetch and format knowledge base files using web URLs
+
 1.0.5: 
 *Animated the chatbot and added appearance upgrades.
 *Added support for fetching data from URLs.
@@ -57,32 +59,52 @@ $bot_object->setTitle('My bot title');
 $bot_object->setDesc('Bot description');
 $bot_object->setInstructions('You are a shop assistant, use the product list to help customers find products');
 
+// You can fetch and format web URLS into .txt files that the AI will use as knowledge base, example:
+
+/*  Will create a file from URL, AI will use the file to answer question, then delete the file. 
+ This can be changed to not delete the file, by simply having the vectorFile creation done somewhere other than
+ chat.php and removing the unlink. */
+$filename = '/' . KnowledgeBaseBuilder::createVectorFileFromUrl('https://samicustomgpt.bredfy.com/','/');
+$bot_files = [$filename];
+$bot_model->setFiles($bot_files);
+$bot_model->setTitle('SamiCustomGPT'); 
+
+// Or you can create a JSON file with the bot data:
+
 // You can use the ID to access the bot from file
 $bot_id = CustomBotDataHandler::createBotFile($bot_object);
 ```
 
 
-Example of retrieving a bot:
+Example of retrieving a bot from file:
 ```
 // You can retrieve bot data using the ID
 $bot_object = CustomBotDataHandler::getBotFromFile('bot_6626c59914fc3'); // Replace ID with the ID of the bot you want to retrieve
 ```
 
 
-Example of retrieving a bot:
+Example of creating the gpt client:
 ```
 // You need to send OpenAiConfig and the bot object to initiate the client
 $config = new OpenAiConfig();
-$config->apiKey = 'API KEY';
+$config->apiKey = 'API KEY'; // Remove line to fetch OPENAI_API_KEY from env variables
 
 $client = new CustomBotClient($bot_object,$config);
 
-// Extra note: You can create your own filehandler and send it as parameter when creating a new client
+// Extra note: You can create your own knowledgebasehandler and send it as parameter when creating a new client
 ```
 
 Send a message and get a response:
 ```
 $response = $client->SendMessageToBot($prompt);
+
+echo $response;
+```
+
+
+Send conversation and get a response based on the conversation(ai memory):
+```
+$response = $client->SendConversationToBot($prompt);
 
 echo $response;
 ```
