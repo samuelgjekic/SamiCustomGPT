@@ -49,7 +49,7 @@ class OpenAIChat implements ChatInterface
 
             $this->client = OpenAI::client($apiKey);
         }
-        $this->model = $config->model ?? OpenAIChatModel::Gpt4Turbo->getModelName();
+        $this->model = $config->model ?? OpenAIChatModel::Gpt4Omni->getModelName();
         $this->modelOptions = $config->modelOptions ?? [];
     }
 
