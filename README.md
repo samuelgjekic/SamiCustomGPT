@@ -40,6 +40,12 @@ The primary motivation behind this project is to empower users to create AI chat
 
 - **Easy Integration**: Built on the [ LLPhant](https://github.com/theodo-group/LLPhant) framework and OpenAI PHP Client library, SamiCustomGPT offers seamless integration with existing systems and workflows.
 
+- **Session based Conversation Memory**: SamiCustomGPT has access to the whole conversation during a session, which gives it the possibility to learn and get to know more about the user and have deeper conversations.
+
+-  **Knowledgebase from URLs**: With SamiCustomGPT you can easily fetch knowledgebase data from web URLs, such as your own website, the chatbot will use this data to answer the users questions in a better way.
+
+
+
 ## Getting Started
 
 To get started with SamiCustomGPT, clone the repository to an empty folder using the following command:
@@ -58,12 +64,12 @@ $bot_object = new CustomBotDataModel();
 $bot_object->setTitle('My bot title');
 $bot_object->setDesc('Bot description');
 $bot_object->setInstructions('You are a shop assistant, use the product list to help customers find products');
-
-// You can fetch and format web URLS into .txt files that the AI will use as knowledge base, example:
-
+```
+Example fetching knowledgebase data from web URLs:
+```
 /*  Will create a file from URL, AI will use the file to answer question, then delete the file. 
- This can be changed to not delete the file, by simply having the vectorFile creation done somewhere other than
- chat.php and removing the unlink. */
+ This can be changed to not delete the file, by simply having the vectorFile creation done somewhere else in the project */
+
 $filename = '/' . KnowledgeBaseBuilder::createVectorFileFromUrl('https://samicustomgpt.bredfy.com/','/');
 $bot_files = [$filename];
 $bot_model->setFiles($bot_files);
