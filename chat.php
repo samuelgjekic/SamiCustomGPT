@@ -1,4 +1,5 @@
 <?php
+use SamiCustomGPT\Handlers\KnowledgeBaseBuilder;
 use SamiCustomGPT\Models\Leads_Bot;
 session_start();
 use SamiCustomGPT\Models\CustomBotDataModel;
@@ -7,10 +8,10 @@ use LLPhant\OpenAIConfig;
 use SamiCustomGPT\CustomBotClient;
 use SamiCustomGPT\Handlers\CustomBotDataHandler;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/IFileHandler.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/IKnowledgeBaseHandler.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Interfaces/ICustomBotClient.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/CustomBotDataHandler.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/FileHandler.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Handlers/KnowledgeBaseHandler.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/Models/CustomBotDataModel.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SamiCustomGPT/chatbot/CustomBotClient.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
@@ -26,17 +27,22 @@ $bot_model->setInstructions('You are a chatbot on the SamiCustomGPT website. \\n
 using SamiCustomGPT on ones website, for example \\n Chatbot that helps customers find what they need, or \\n Chatbot that helps with customer support
 \\n Faq Chatbot which answers frequently asked questions, \\n and more that you come up with. \\n SamiCustomGPT is easy to integrate and customize and
 supports multiple bots using unique bot ids. \\n You must Keep your answers short but informative . Speak english as default. ');
-$bot_files = ['/samicustomgpt.txt'];
+
+
+/*  Will create a file from URL, AI will use the file to answer question, then delete the file. 
+ This can be changed to not delete the file, by simply having the vectorFile creation done somewhere other than
+ chat.php and removing the unlink. */
+$filename = '/' . KnowledgeBaseBuilder::createVectorFileFromUrl('https://samicustomgpt.bredfy.com/','/');
+$bot_files = [$filename];
 $bot_model->setFiles($bot_files);
-$bot_model->setTitle('SamiCustomGPT');
+$bot_model->setTitle('SamiCustomGPT'); 
+
+
 $bot_model->setDesc(('The official SamiCustomGPT chatbot'));
 
-/* $bot_model = new CustomBotDataModel();
-$bot_model->setTitle('Test bot 2024');
-$leadsbot = new Leads_Bot('Custom company','Company info :)',false,true);
-$bot_model->setInstructions($leadsbot->instructions());
-CustomBotDataHandler::insertBotToDb($bot_model); */
 $customgpt = new CustomBotClient($bot_model,$config);
+unlink($_SERVER['DOCUMENT_ROOT'] . $filename);
+
 // Check if the message parameter is set
 if (isset($_POST['message'])) {
     $message = $_POST['message'];

@@ -11,7 +11,7 @@ class CustomBotDataModel implements ICustomBotDataModel {
     private ?string $title;
     private ?string $description;
     private ?string $instructions;
-    private ?array $files;
+    private ?array $files = [];
 
     private ?string $poweredBy = 'SamiCustomGPT';
     
@@ -74,4 +74,5 @@ class CustomBotDataModel implements ICustomBotDataModel {
     function setDesc(?string $description){
         $this->description = $description;
     }
+
 }

@@ -12,7 +12,8 @@ own file handler.
 
 The attachAllFilesToBot is required for the attachment of files when the bot is starting up, currently this is multiple filepaths stored as array */
 
-interface IFileHandler {
+interface IKnowledgeBaseHandler
+{
     function AttachAllFilesToBot($files); 
     function getVectorStore(); 
 

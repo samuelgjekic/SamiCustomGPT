@@ -18,4 +18,6 @@ interface ICustomBotDataModel {
 
     public function jsonDecode($bot_json_data); // Function to turn decode values from encoded json and set the values to the custom bot data object
 
+
+
 }

@@ -7,7 +7,8 @@ use Exception;
 
 
 /* This is a work in progress, this class is able to fetch data from a website and store it in embedding. 
- */class UserFilesBuilder
+ */
+class KnowledgeBaseBuilder
 {
 
     public function __construct()
@@ -29,7 +30,7 @@ use Exception;
         return $formattedText;
     }
 
-    private static function formatText(string $text): string
+private static function formatText(string $text): string
     {
         // Convert the text to UTF-8 encoding
         $webtext = mb_convert_encoding($text, 'UTF-8');
@@ -72,7 +73,7 @@ use Exception;
     }
 
 
-    public static function createVectorFileFromUrl(string $url, string $filepath): string
+    public static function createVectorFileFromUrl(string $url, string $filepath): string|null
     {
         /* This function will get text from a web url and format it
         to then save the file, maxFileSize decides how big the file can be */
@@ -88,20 +89,35 @@ use Exception;
 
             $fileName = self::generateFileName();
             $completePath = $_SERVER['DOCUMENT_ROOT'] . $filepath . $fileName;
-            $validateFileSize = self::validateFileSize($completePath);
-            if ($validateFileSize !== false) {
-                // File is under MaxFileSize
-                file_put_contents($completePath, $data);
-            } else {
-                // File to big!
-                return null;
-            }
+            file_put_contents($completePath, $data);
 
             if (file_exists($completePath)) {
                 return $fileName;
             } else {
                 return null;
             }
+        } catch (Exception $error) {
+            // Return false on error
+            return null;
+        }
+    }
+
+    public static function createVectorStringFromUrl(string $url): string
+    {
+        /* This function will get text from a web url and format it
+        to then save the file, maxFileSize decides how big the file can be */
+
+        try {
+            // Check if http or https already exists in the url given
+            if (strpos($url, "http://") !== false || strpos($url, "https://") !== false) {
+                $data = self::getTextFromWebsite($url);
+            } else {
+                // Not found, use default https
+                $data = self::getTextFromWebsite('https://' . $url);
+            }
+
+           return $data;
+
         } catch (Exception $error) {
             // Return false on error
             return null;
@@ -115,20 +131,5 @@ use Exception;
         return $filename;
     }
 
-    private static function validateFileSize($filePath): bool
-    {
-        $gigabyte = 1;
-        $maxFileSize = $gigabyte * pow(1024, 3);
-
-        // Check the size of the file
-        $fileSize = filesize($filePath);
-
-        if ($fileSize !== false && $fileSize <= $maxFileSize) {
-            // File size is within the limit, proceed with writing contents
-            return true;
-        } else {
-            // File size exceeds the limit
-            return false;
-        }
-    }
+    
 }
