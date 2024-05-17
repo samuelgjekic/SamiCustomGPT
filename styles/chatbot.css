@@ -4,7 +4,7 @@
     position: fixed;
     bottom: 10px;
     right: 0;
-    width: 350px;
+    width: 90%;
     margin-bottom: 20px;
     margin-right: 20px;
     border: 1px solid #ccc;
@@ -12,12 +12,12 @@
     overflow: hidden;
     box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.1);
     z-index: 9999; /* Ensure the chatbox appears on top of other content */
-    display: none; /* Hide chatbot container by default */
+    height:90%;
 }
 /* Media query for mobile devices */
 @media (max-width: 767px) {
     .chat-container {
-        width: calc(100% - 40px); /* Adjust width to fit the screen width */
+        width: calc(100% - 60px); /* Adjust width to fit the screen width */
         margin-left: 20px; /* Add margin to maintain space from left edge */
         margin-right: 20px; /* Add margin to maintain space from right edge */
         left: 0; /* Reset left positioning */
@@ -26,7 +26,7 @@
 }
 
 .chat-title {
-    background-color: #8a2be2; /* Purple color */
+    background-color: #03748C; /* Purple color */
     color: #fff; /* White text color */
     padding: 10px;
     text-align: center;
@@ -39,7 +39,7 @@
 
 
 .chat-box {
-    height: 300px;
+    height: 75%;
     padding: 10px;
     overflow-y: auto;
     background-color: whitesmoke; /* Set background color of chatbox */
@@ -74,7 +74,7 @@
 
 
 .assistant-message .avatar {
-    background-color: #8a2be2;
+    background-color: #03748C;
     font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
 
 }
@@ -93,6 +93,7 @@
     max-width: calc(100% - 50px); /* Adjust the width as needed */
     word-wrap: break-word; /* Allow long words to wrap */
     overflow-wrap: break-word; /* Ensure words break at appropriate points */
+    font-size:15px;
 }
 
 
@@ -102,6 +103,7 @@
 
 .message-text {
     margin-top: 5px;
+    max-width: 100%; /* Ensure the message text doesn't overflow */
 }
 
 
@@ -112,18 +114,21 @@
 }
 
 #messageInput {
-    flex: 1;
-    margin-right: 10px;
-    display: flex;
-    padding: 15px; /* Increase padding for a bigger input container */
-    background-color: white; /* Light gray background color for a modern look */
-    border-radius: 20px; /* Add rounded corners */
-    font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+    width: 95%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical; /* Allows users to resize the height, but not the width */
+    font-family: 'Open Sans', sans-serif;
+    font-size:15px;
+    resize: none; /* Disable resizing */
+
 
 }
 
 #sendButton {
-    background-color: #8a2be2;
+    background-color: #FFAB5E;
     color: #fff;
     border: none;
     padding: 8px 15px;
@@ -154,7 +159,7 @@
     right: 20px;
     width: 60px;
     height: 60px;
-    background-color: #8a2be2;
+    background-color: #03748C;
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -189,13 +194,19 @@
 
 .close-button {
     position: absolute;
-    top: -7px;
-    right: 10px;
-    cursor: pointer;
+    top: 0px;
+    right: 5px;
+    cursor:grab;
     color: #fff; /* White color for the X */
-    font-size: 44px;
-    padding: 5px;
+    font-size: 23px;
+    padding: 10px; /* Increase padding for larger clickable area */
     z-index: 999; /* Ensure the close button is on top of other content */
+}
+
+/* Hover effect */
+.close-button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Add a semi-transparent white background on hover */
+    border-radius: 50%; /* Optional: Apply rounded corners for a button-like appearance */
 }
 
 .fade-in {
@@ -247,4 +258,50 @@
     animation: typingDots 1s infinite; /* Apply the typingDots animation */
     display: inline-block;
     vertical-align: middle;
+}
+
+
+.message-text pre {
+    font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+    font-size:15px;
+    white-space: pre-wrap; /* Preserve whitespace but wrap long lines */
+    margin: 0; /* Remove default margins from pre tag */
+}
+
+/* Tooltip container */
+#tooltip-container {
+    position: relative;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    top: 33px; /* Adjust position as needed */
+    right: 5px; /* Adjust position as needed */
+    background-color: whitesmoke; /* Adjust background color and opacity */
+    color: #03748C;
+    padding: 15px;
+    border-radius: 15px;
+    display: none; /* Initially hide the tooltip */
+    z-index: 999; /* Ensure tooltip is on top of other content */
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Tooltip text */
+.tooltip-text {
+    margin-right: 10px;
+}
+
+/* Tooltip close button */
+.tooltip-close {
+
+    cursor: pointer;
+    font-size: 33px;
+    padding: 11px;
+}
+
+.tooltip-close:hover {
+    color: #FFAB5E; /* Adjust close button color on hover */
 }

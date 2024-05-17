@@ -5,7 +5,9 @@ $(document).ready(function() {
     const chatAvatar = $("#chatAvatar"); // New chat avatar element
     const chatContainer = $("#chatCont");
     const chatCloseButton = $("#closeButton");
+    scrollToBottom();
 
+    
     chatAvatar.on("click", function() {
         chatContainer.toggleClass("chat-visible");
         chatContainer.toggleClass("fade-in"); // Add fade-in class
@@ -13,14 +15,45 @@ $(document).ready(function() {
         chatAvatar.hide();
     });
 
-    chatCloseButton.on("click", function() {
-        chatContainer.toggleClass("fade-out"); // Add fade-out class
-        chatContainer.removeClass("fade-in"); // Ensure fade-in class is removed
-        setTimeout(function() {
-            chatContainer.toggleClass("chat-visible");
-            chatAvatar.show();
-        }, 500); // Delay hiding chatContainer until after the fade-out animation
+
+
+        // Fade in tooltip when page loads
+        $("#tooltip").fadeIn(1000); // Adjust fade-in duration as needed
+
+        // Fade out tooltip when close button is clicked
+        $("#tooltipClose").on("click", function() {
+            $("#tooltip").fadeOut(500); // Adjust fade-out duration as needed
+        });
+
+// Event listener for the close button
+$("#closeButton").on("click", function() {
+    // Make an AJAX call to clear the session
+    event.preventDefault();
+
+    $.ajax({
+        url: "clear_session.php",
+        method: "POST",
+        success: function(response) {
+            // Parse the JSON response
+            try {
+                var data = JSON.parse(response);
+                // Check if the session was cleared successfully
+                if (data.status === "success") {
+                    console.log("Session cleared successfully.");
+                    // Clear the chat box
+                    $("#chatBox").empty();
+                } else {
+                    console.error("Failed to clear session.");
+                }
+            } catch (error) {
+                console.error("Error parsing JSON response:", error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
     });
+});
 
 // Function to append a message to the chat box
 function appendMessage(message, isUser, assistantName, showAvatarAndName = true) {
@@ -34,30 +67,30 @@ function appendMessage(message, isUser, assistantName, showAvatarAndName = true)
         messageElement.addClass("assistant-message");
     }
 
-    // Append the avatar and name only if showAvatarAndName is true
-    if (showAvatarAndName) {
-        // Append the avatar
-        const avatar = $("<div>").addClass("avatar").text(isUser ? "U" : assistantName.charAt(0)); // Use first letter of assistant's name
-        messageElement.append(avatar);
+// Append the avatar and name only if showAvatarAndName is true
+if (showAvatarAndName) {
+    // Append the avatar
+    const avatar = $("<div>").addClass("avatar").text(isUser ? "Du" : assistantName); // Use first letter of assistant's name
+    messageElement.append(avatar);
 
-        // Create a message content element
-        const messageContent = $("<div>").addClass("message-content");
+    // Create a message content element
+    const messageContent = $("<div>").addClass("message-content");
 
-        // Append the message title (assistant name)
-        const messageTitle = $("<div>").addClass("message-title").text(isUser ? "You:" : assistantName + ":");
-        messageContent.append(messageTitle);
+    // Append the message title (assistant name)
+    const messageTitle = $("<div>").addClass("message-title").text(isUser ? "Du:" : assistantName + ":");
+    messageContent.append(messageTitle);
 
-        // Append the message text
-        const messageText = $("<div>").addClass("message-text").text(message);
-        messageContent.append(messageText);
+    // Append the message text within a <pre> tag
+    const messageText = $("<div>").addClass("message-text").html("<pre>" + message + "</pre>");
+    messageContent.append(messageText);
 
-        // Append the message content to the message element
-        messageElement.append(messageContent);
-    } else {
-        // If showAvatarAndName is false, only append the message text
-        const messageText = $("<div>").addClass("message-text").text(message);
-        messageElement.append(messageText);
-    }
+    // Append the message content to the message element
+    messageElement.append(messageContent);
+} else {
+    // If showAvatarAndName is false, only append the message text within a <pre> tag
+    const messageText = $("<div>").addClass("message-text").html("<pre>" + message + "</pre>");
+    messageElement.append(messageText);
+}
 
     // Append the message element to the chat box
     $("#chatBox").append(messageElement);
@@ -65,6 +98,8 @@ function appendMessage(message, isUser, assistantName, showAvatarAndName = true)
     // Scroll to the bottom of the chat box
     scrollToBottom();
 }
+
+
 
 // Function to scroll to the bottom of the chat box
 function scrollToBottom() {
@@ -115,11 +150,12 @@ sendButton.on("click", function() {
 
     // You can also handle sending message on pressing enter key
     messageInput.on("keypress", function(event) {
-        if (event.key === "Enter") {
-            sendButton.click(); // Simulate a click on the send button
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault(); // Prevent the default newline behavior
+            sendButton.click();
         }
     });
 
-    // Example: Append a welcome message when the chat loads
-    appendMessage("Welcome to the chatbot!", false);
+   
 });
+

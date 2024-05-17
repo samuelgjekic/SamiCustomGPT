@@ -59,3 +59,15 @@
     color: #888;
     text-align: center;
 }
+
+.message-text {
+    margin-top: 5px;
+    max-width: 100%; /* Ensure the message text doesn't overflow */
+}
+
+.message-text pre {
+    font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+    font-size: 14px; /* Match the font size of the input */
+    white-space: pre-wrap; /* Preserve whitespace but wrap long lines */
+    margin: 0; /* Remove default margins from pre tag */
+}

@@ -1,6 +1,8 @@
 <?php
-use SamiCustomGPT\Models\Leads_Bot;
 session_start();
+
+use LLPhant\Chat\Enums\OpenAIChatModel;
+use SamiCustomGPT\Models\Leads_Bot;
 use SamiCustomGPT\Models\CustomBotDataModel;
 // Embed SamiCustomGPT
 use LLPhant\OpenAIConfig;
@@ -16,26 +18,33 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/Sami
 require_once $_SERVER['DOCUMENT_ROOT'] . '/wp-content/plugins/SamiCustomGPT/vendor/autoload.php';
 
 
+
+
 // Testing custom gpt bot
 $config = new OpenAIConfig();
 $config->apiKey = '';
 
 $bot_model = new CustomBotDataModel();
-$customgpt;
-$bot_model->setInstructions('You are a chatbot on the SamiCustomGPT website. \\n Your job is to explain to the user the benefits of
-using SamiCustomGPT on ones website, for example \\n Chatbot that helps customers find what they need, or \\n Chatbot that helps with customer support
-\\n Faq Chatbot which answers frequently asked questions, \\n and more that you come up with. \\n SamiCustomGPT is easy to integrate and customize and
-supports multiple bots using unique bot ids. \\n You must Keep your answers short but informative . Speak english as default. ');
-$bot_files = ['/samicustomgpt.txt'];
-$bot_model->setFiles($bot_files);
-$bot_model->setTitle('SamiCustomGPT');
-$bot_model->setDesc(('The official SamiCustomGPT chatbot'));
 
-/* $bot_model = new CustomBotDataModel();
-$bot_model->setTitle('Test bot 2024');
-$leadsbot = new Leads_Bot('Custom company','Company info :)',false,true);
-$bot_model->setInstructions($leadsbot->instructions());
-CustomBotDataHandler::insertBotToDb($bot_model); */
+
+if(isset($_COOKIE['areLollo'])){
+    $config->model = OpenAIChatModel::Gpt4Omni->getModelName();
+} else {
+    $config->model = OpenAIChatModel::Gpt35Turbo->getModelName();
+}
+
+$loadConversation = true; // set to false if you dont want to load the conversation from session. 
+
+$bot_model->setInstructions('Du är en svensk talande assistent för allt möjligt. Du kan tala andra språk om användaren ber dig. \\n 
+Försök att svara så korrekt som möjligt, om du inte vet något ska du nämna det. Du ska även tala om att du är en Chattbot för DinAI.se i början av konversationen. \\n
+DinAI har många olika AI verktyg, använd dig av filen du mottagit för att kunna hitta information, om du inte hittar någon information får du improvisera. \\n
+Om någon frågar dig vilken modell du använder ska du nämna att du använder DinAI GPT, som använder sig av den allra senaste strykan inom ai modeller. \\n ');
+
+$bot_files = ['/wp-content/plugins/SamiCustomGPT/dinai.txt'];
+$bot_model->setFiles($bot_files);
+$bot_model->setTitle('DinAi');
+$bot_model->setDesc(('Den officiella DinAI chattboten'));
+
 $customgpt = new CustomBotClient($bot_model,$config);
 // Check if the message parameter is set
 if (isset($_POST['message'])) {
@@ -45,7 +54,6 @@ if (isset($_POST['message'])) {
     echo json_encode(array("response" => $response, "assistantName" => $bot_model->getTitle()));
     exit; // End script execution after sending the response
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,28 +68,79 @@ if (isset($_POST['message'])) {
 
 </head>
 <body>
-<div id="chatAvatar">
-<i class="fas fa-comment chat-icon"></i>
-</div>
+
 
 <div class="chat-container" id="chatCont">
-    <div class="close-button" id="closeButton">&times;</div>
-        <div class="chat-title">SamiCustomGPT</div>
+<div id="tooltip-container">
+    <div class="tooltip" id="tooltip">
+        <span class="tooltip-text">Använd soptunnan för att rensa konversationen</span>
+        <span class="tooltip-close" id="tooltipClose">&times;</span>
+    </div>
+</div>
+<div class="close-button" id="closeButton">
+    <i class="fas fa-trash-alt"></i> <!-- Font Awesome trash icon -->
+</div>        <div class="chat-title">DinAI Chattbot</div>
         <div class="chat-box" id="chatBox">
             <div class="message assistant-message">
-                <div class="avatar">Sami</div>
+                <div class="avatar">DinAI</div>
                 <div class="message-content">
-                    <div class="message-title">SamiCustomGPT:</div>
-                    <div class="message-text">Hey there! How can i help you?</div>
+                    <div class="message-title">DinAI:</div>
+                    <div class="message-text">Hej där, hur kan jag hjälpa dig idag?</div>
                 </div>
             </div>
+            <?php // here is the chat message start 
+            ?>
+            <?php 
+            if($loadConversation){
+                if(isset($_SESSION['All_Messages'])){
+                    $conversation = $_SESSION['All_Messages'];
+                  // Iterate over each string in the conversation array
+                  foreach ($conversation as $message) {
+                  
+                    // Check if the string starts with "user_"
+                    if (strpos($message, 'user_') === 0) {
+                        $message = str_replace('user_', '', $message);
+
+                        echo '  <div class="message user-message">
+                <div class="avatar">Du</div>
+                <div class="message-content">
+                    <div class="message-title">Du:</div>
+                    <div class="message-text"><pre>'. $message . '</pre></div>
+                </div>
+            </div>';
+                    }
+                    // Check if the string starts with "bot_"
+                    elseif (strpos($message, 'bot_') === 0) {
+                        $message = str_replace('bot_', '', $message);
+
+                        echo '  <div class="message assistant-message">
+                        <div class="avatar">DinAI</div>
+                        <div class="message-content">
+                            <div class="message-title">DinAI:</div>
+                            <div class="message-text"><pre>'. $message . '</pre></div>
+                        </div>
+                    </div>';
+                    }
+                    // Handle other cases or invalid messages
+                    else {
+                        echo '  <div class="message user-message">
+                        <div class="avatar">Okänd</div>
+                        <div class="message-content">
+                            <div class="message-title">Okänd:</div>
+                            <div class="message-text">'. $message . '</div>
+                        </div>
+                    </div>';
+                    }
+                }}
+            }
+            ?>
             
             
         </div>
-        <div class="powered-by-text"> Created by Samuel Gjekic </div>
+        <div class="powered-by-text"> Powered by <a href="https://dinai.se">DinAI</a> </div>
         <div class="input-container">
-            <input type="text" id="messageInput" placeholder="Write your message...">
-            <button id="sendButton">Send</button>
+        <textarea id="messageInput" placeholder="Skriv ditt meddelande..." rows="3"></textarea>
+            <button id="sendButton">Skicka</button>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
