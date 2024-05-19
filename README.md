@@ -8,6 +8,8 @@
 
 ## Demo
 You can check out the chatbot in action [ Here](https://samicustomgpt.bredfy.com)
+And you can also check out DinAI, a swedish AI website that has integrated SamiCustomGPT as a static chatbot on their website You can check out the chatbot in action [ Here](https://dinai.se)
+
 
 ## Changelog
 ```
