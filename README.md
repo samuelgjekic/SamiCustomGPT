@@ -13,6 +13,8 @@ And you can also check out DinAI, a swedish AI website that has integrated SamiC
 
 ## Changelog
 ```
+1.0.7: Added FAQ buttons to the chatbot that will send a message to the ai on click
+
 1.0.6: Can now fetch and format knowledge base files using web URLs
 
 1.0.5: 
