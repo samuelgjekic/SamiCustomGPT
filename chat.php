@@ -23,10 +23,7 @@ $config->apiKey = '';
 
 $bot_model = new CustomBotDataModel();
 $customgpt;
-$bot_model->setInstructions('You are a chatbot on the SamiCustomGPT website. \\n Your job is to explain to the user the benefits of
-using SamiCustomGPT on ones website, for example \\n Chatbot that helps customers find what they need, or \\n Chatbot that helps with customer support
-\\n Faq Chatbot which answers frequently asked questions, \\n and more that you come up with. \\n SamiCustomGPT is easy to integrate and customize and
-supports multiple bots using unique bot ids. \\n You must Keep your answers short but informative . Speak english as default. ');
+$bot_model->setInstructions(' ');
 
 
 /*  Will create a file from URL, AI will use the file to answer question, then delete the file. 
@@ -54,43 +51,48 @@ if (isset($_POST['message'])) {
 
 ?>
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SamiCustomGPT></title>
+    <title>SamiCustomGPT</title>
     <link rel="stylesheet" href="/styles/chatbot.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-
 </head>
 <body>
 <div id="chatAvatar">
-<i class="fas fa-comment chat-icon"></i>
+    <i class="fas fa-comment chat-icon"></i>
 </div>
 
 <div class="chat-container" id="chatCont">
     <div class="close-button" id="closeButton">&times;</div>
-        <div class="chat-title">SamiCustomGPT</div>
-        <div class="chat-box" id="chatBox">
-            <div class="message assistant-message">
-                <div class="avatar">Sami</div>
-                <div class="message-content">
-                    <div class="message-title">SamiCustomGPT:</div>
-                    <div class="message-text">Hey there! How can i help you?</div>
+    <div class="chat-title">SamiCustomGPT</div>
+    <div class="chat-box" id="chatBox">
+        <div class="message assistant-message">
+            <div class="avatar">Sami</div>
+            <div class="message-content">
+                <div class="message-title">SamiCustomGPT:</div>
+                <div class="message-text">Hey there! How can I help you?          
+                <div class="faq-container-deprecated">
+        <button class="faq-button">What are your hours of operation?</button>
+        <button class="faq-button">What services do you offer?</button>
+        <button class="faq-button">How can I contact support?</button>
+    </div>
                 </div>
             </div>
-            
-            
-        </div>
-        <div class="powered-by-text"> Created by Samuel Gjekic </div>
-        <div class="input-container">
-            <input type="text" id="messageInput" placeholder="Write your message...">
-            <button id="sendButton">Send</button>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/chat.js"></script> <!-- Update JavaScript path to absolute -->
+    <div class="input-container">
+        <input type="text" id="messageInput" placeholder="Write your message...">
+        <button id="sendButton">Send</button>
+    </div>
+    <div class="powered-by-text">Created by Samuel Gjekic</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/chat.js"></script>
 </body>
 </html>
+

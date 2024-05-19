@@ -56,6 +56,12 @@
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add box shadow for a modern border effect */
 }
 
+.message-text pre {
+    font-family: 'Open Sans', sans-serif; /* Use Open Sans font */
+    font-size:15px;
+    white-space: pre-wrap; /* Preserve whitespace but wrap long lines */
+    margin: 0; /* Remove default margins from pre tag */
+}
 
 
 .avatar {
@@ -85,6 +91,7 @@
 
 }
 
+
 .message-content {
     display: flex;
     flex-direction: column;
@@ -93,6 +100,7 @@
     max-width: calc(100% - 50px); /* Adjust the width as needed */
     word-wrap: break-word; /* Allow long words to wrap */
     overflow-wrap: break-word; /* Ensure words break at appropriate points */
+    font-size:15px;
 }
 
 
@@ -102,6 +110,7 @@
 
 .message-text {
     margin-top: 5px;
+    max-width: 100%; /* Ensure the message text doesn't overflow */
 }
 
 
@@ -145,6 +154,7 @@
     color: #888;
     text-align: center;
     font-family: 'Open Sans', sans-serif; /* Add Open Sans font */
+    padding: 4px;
 
 }
 
@@ -247,4 +257,44 @@
     animation: typingDots 1s infinite; /* Apply the typingDots animation */
     display: inline-block;
     vertical-align: middle;
+}
+
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: whitesmoke;
+    border-top: 1px solid #ccc;
+}
+
+.faq-button {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    transition: background-color 0.3s, transform 0.3s;
+    animation: slideIn 0.5s ease;
+    max-width: 90%;  /* Adjust the width to fit nicely */
+    margin: 5px auto;  /* Center the buttons */
+}
+
+.faq-button:hover {
+    background-color: #e7e7e7;
+    transform: translateY(-2px);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -2,124 +2,130 @@ $(document).ready(function() {
     const chatBox = $("#chatBox");
     const messageInput = $("#messageInput");
     const sendButton = $("#sendButton");
-    const chatAvatar = $("#chatAvatar"); // New chat avatar element
+    const chatAvatar = $("#chatAvatar");
     const chatContainer = $("#chatCont");
     const chatCloseButton = $("#closeButton");
+    const faqButtons = $(".faq-button");
 
     chatAvatar.on("click", function() {
         chatContainer.toggleClass("chat-visible");
-        chatContainer.toggleClass("fade-in"); // Add fade-in class
-        chatContainer.removeClass("fade-out"); // Ensure fade-out class is removed
+        chatContainer.toggleClass("fade-in");
+        chatContainer.removeClass("fade-out");
         chatAvatar.hide();
     });
 
     chatCloseButton.on("click", function() {
-        chatContainer.toggleClass("fade-out"); // Add fade-out class
-        chatContainer.removeClass("fade-in"); // Ensure fade-in class is removed
+        chatContainer.toggleClass("fade-out");
+        chatContainer.removeClass("fade-in");
         setTimeout(function() {
             chatContainer.toggleClass("chat-visible");
             chatAvatar.show();
-        }, 500); // Delay hiding chatContainer until after the fade-out animation
+        }, 500);
     });
 
-// Function to append a message to the chat box
-function appendMessage(message, isUser, assistantName, showAvatarAndName = true) {
-    // Create a message element
-    const messageElement = $("<div>").addClass("message");
-
-    // Add appropriate classes based on whether it's a user message or assistant message
-    if (isUser) {
-        messageElement.addClass("user-message");
-    } else {
-        messageElement.addClass("assistant-message");
+    function appendMessage(message, isUser, assistantName, showAvatarAndName = true) {
+        const messageElement = $("<div>").addClass("message");
+        if (isUser) {
+            messageElement.addClass("user-message");
+        } else {
+            messageElement.addClass("assistant-message");
+        }
+        if (showAvatarAndName) {
+            const avatar = $("<div>").addClass("avatar").text(isUser ? "U" : assistantName.charAt(0));
+            messageElement.append(avatar);
+            const messageContent = $("<div>").addClass("message-content");
+            const messageTitle = $("<div>").addClass("message-title").text(isUser ? "You:" : assistantName + ":");
+            messageContent.append(messageTitle);
+            const messageText = $("<div>").addClass("message-text").html("<pre>" + message + "</pre>");
+            messageContent.append(messageText);
+            messageElement.append(messageContent);
+        } else {
+            const messageText = $("<div>").addClass("message-text").html("<pre>" + message + "</pre>");
+            messageElement.append(messageText);
+        }
+        $("#chatBox").append(messageElement);
+        scrollToBottom();
     }
 
-    // Append the avatar and name only if showAvatarAndName is true
-    if (showAvatarAndName) {
-        // Append the avatar
-        const avatar = $("<div>").addClass("avatar").text(isUser ? "U" : assistantName.charAt(0)); // Use first letter of assistant's name
-        messageElement.append(avatar);
-
-        // Create a message content element
-        const messageContent = $("<div>").addClass("message-content");
-
-        // Append the message title (assistant name)
-        const messageTitle = $("<div>").addClass("message-title").text(isUser ? "You:" : assistantName + ":");
-        messageContent.append(messageTitle);
-
-        // Append the message text
-        const messageText = $("<div>").addClass("message-text").text(message);
-        messageContent.append(messageText);
-
-        // Append the message content to the message element
-        messageElement.append(messageContent);
-    } else {
-        // If showAvatarAndName is false, only append the message text
-        const messageText = $("<div>").addClass("message-text").text(message);
-        messageElement.append(messageText);
+    function scrollToBottom() {
+        const chatBox = document.getElementById("chatBox");
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Append the message element to the chat box
-    $("#chatBox").append(messageElement);
-
-    // Scroll to the bottom of the chat box
-    scrollToBottom();
-}
-
-// Function to scroll to the bottom of the chat box
-function scrollToBottom() {
-    const chatBox = document.getElementById("chatBox");
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// Event listener for sending a message
-sendButton.on("click", function() {
-    const message = messageInput.val().trim();
-    if (message !== "") {
-        // Add user's message to the chat box
-        appendMessage(message, true);
-
-        // Delay displaying the loading message container for 1 second
-        setTimeout(function() {
-            // Add animated dots while waiting for response
-            const loadingMessage = $("<div>").addClass("message loading-message").text("..."); // Create loading message element with dots
-            $("#chatBox").append(loadingMessage); // Append loading message to chat box
-            scrollToBottom(); // Scroll to the bottom after appending the loading message
-        }, 1000); // Delay for 1 second (1000 milliseconds)
-
-        // Get the bot ID from the URL
-        // Send the message asynchronously
-        $.ajax({
-            url: "chat.php",
-            method: "POST",
-            data: { message: message },
-            success: function(response) {
-                // Parse the JSON response
-                const { response: botResponse, assistantName } = JSON.parse(response);
-                // Remove the loading message
-                $(".loading-message").remove();
-                // Append the response to the chat box
-                appendMessage(botResponse, false, assistantName); // Pass assistant name to appendMessage
-                scrollToBottom(); // Scroll to the bottom after appending the bot's response
-            },
-            error: function(xhr, status, error) {
-                console.error("Error:", error);
-            }
-        });
-
-        messageInput.val(""); // Clear the input field
+    function disableInputs() {
+        sendButton.prop("disabled", true);
+        messageInput.prop("disabled", true);
+        faqButtons.prop("disabled", true); // Disable FAQ buttons
     }
-});
 
+    function enableInputs() {
+        sendButton.prop("disabled", false);
+        messageInput.prop("disabled", false);
+        faqButtons.prop("disabled", false); // Enable FAQ buttons
+    }
 
-
-    // You can also handle sending message on pressing enter key
-    messageInput.on("keypress", function(event) {
-        if (event.key === "Enter") {
-            sendButton.click(); // Simulate a click on the send button
+    sendButton.on("click", function() {
+        const message = messageInput.val().trim();
+        if (message !== "") {
+            appendMessage(message, true);
+            disableInputs();
+            setTimeout(function() {
+                const loadingMessage = $("<div>").addClass("message loading-message").text("...");
+                $("#chatBox").append(loadingMessage);
+                scrollToBottom();
+            }, 1000);
+            $.ajax({
+                url: "chat.php",
+                method: "POST",
+                data: { message: message },
+                success: function(response) {
+                    const { response: botResponse, assistantName } = JSON.parse(response);
+                    $(".loading-message").remove();
+                    appendMessage(botResponse, false, assistantName);
+                    scrollToBottom();
+                    enableInputs();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    enableInputs();
+                }
+            });
+            messageInput.val("");
         }
     });
 
-    // Example: Append a welcome message when the chat loads
-    appendMessage("Welcome to the chatbot!", false);
+    messageInput.on("keypress", function(event) {
+        if (event.key === "Enter") {
+            sendButton.click();
+        }
+    });
+
+    faqButtons.click(function() {
+        const faqText = $(this).text();
+        if (faqText !== "") {
+            appendMessage(faqText, true);
+            disableInputs();
+            setTimeout(function() {
+                const loadingMessage = $("<div>").addClass("message loading-message").text("...");
+                $("#chatBox").append(loadingMessage);
+                scrollToBottom();
+            }, 1000);
+            $.ajax({
+                url: "chat.php",
+                method: "POST",
+                data: { message: faqText },
+                success: function(response) {
+                    const { response: botResponse, assistantName } = JSON.parse(response);
+                    $(".loading-message").remove();
+                    appendMessage(botResponse, false, assistantName);
+                    scrollToBottom();
+                    enableInputs();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                    enableInputs();
+                }
+            });
+        }
+    });
 });
