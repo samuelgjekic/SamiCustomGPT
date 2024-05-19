@@ -4,10 +4,12 @@
 
 **SamiCustomGPT** is a project aimed at creating a customizable GPT chatbot with vector stored knowledge base indexing. Built using PHP, this project is a work in progress with the goal of enabling users to easily customize chatbots for various purposes, tailored to individual or organizational needs.
 
-![samicustomgpt](https://github.com/samuelgjekic/SamiCustomGPT/assets/41647182/ce54ffcb-c5c1-40a8-8634-3d8763f915b1)
+![samicustomgpt](https://github.com/samuelgjekic/SamiCustomGPT/assets/41647182/db042857-870c-4765-8832-e2b89823022b)
 
 ## Demo
 You can check out the chatbot in action [ Here](https://samicustomgpt.bredfy.com)
+And you can also check out DinAI, a swedish AI website that has integrated SamiCustomGPT as a static chatbot on their website You can check out the chatbot in action [ Here](https://dinai.se)
+
 
 ## Changelog
 ```
