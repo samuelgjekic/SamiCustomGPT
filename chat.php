@@ -1,4 +1,5 @@
 <?php
+use LLPhant\Chat\Enums\OpenAIChatModel;
 use SamiCustomGPT\Handlers\KnowledgeBaseBuilder;
 use SamiCustomGPT\Models\Leads_Bot;
 session_start();
@@ -20,16 +21,17 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 // Testing custom gpt bot
 $config = new OpenAIConfig();
 $config->apiKey = '';
+$config->model = OpenAIChatModel::Gpt35Turbo->getModelName();
+
 
 $bot_model = new CustomBotDataModel();
-$customgpt;
-$bot_model->setInstructions(' ');
+$bot_model->setInstructions('Du är en hjälpreda för Advantix.se som säljer hemsidor');
 
 
 /*  Will create a file from URL, AI will use the file to answer question, then delete the file. 
  This can be changed to not delete the file, by simply having the vectorFile creation done somewhere other than
  chat.php and removing the unlink. */
-$filename = '/' . KnowledgeBaseBuilder::createVectorFileFromUrl('https://samicustomgpt.bredfy.com/','/');
+$filename = '/' . KnowledgeBaseBuilder::createVectorFileFromUrl('https://advantix.se/','/');
 $bot_files = [$filename];
 $bot_model->setFiles($bot_files);
 $bot_model->setTitle('SamiCustomGPT'); 
@@ -76,7 +78,7 @@ if (isset($_POST['message'])) {
                 <div class="message-title">SamiCustomGPT:</div>
                 <div class="message-text">Hey there! How can I help you?          
                 <div class="faq-container-deprecated">
-        <button class="faq-button">What are your hours of operation?</button>
+        <button class="faq-button">What is SamiCustomGPT?</button>
         <button class="faq-button">What services do you offer?</button>
         <button class="faq-button">How can I contact support?</button>
     </div>

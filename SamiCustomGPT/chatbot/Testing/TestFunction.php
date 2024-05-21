@@ -4,7 +4,7 @@ class TestFunction{
 
     /*This function returns special string to user */
     public function getSpecialString() : string{
-        $testString = uniqid('SamiCustomGpt_');
-        return $testString;
+        $string = 'Function Called: getSpecialString';
+        return $string;
     }
 }
